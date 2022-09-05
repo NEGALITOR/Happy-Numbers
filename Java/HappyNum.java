@@ -11,7 +11,7 @@ public class HappyNum
     double norm;
   }
   
-  static double norm;
+  public static double norm;
   
   public static void main(String[] args)
   {
@@ -23,22 +23,14 @@ public class HappyNum
     
     System.out.print("Second Argument: ");
     int second = stdin.nextInt();
-    //stdin.close();
+    stdin.close();
     
     
     
     isHappy(first, second, normSorted);
-    
-    /*
-    System.out.println("\n" + normSorted.get(0).num + " " + normSorted.get(0).norm);
-    System.out.println(normSorted.get(1).num + " " + normSorted.get(1).norm);
-    System.out.println(normSorted.get(2).num + " " + normSorted.get(2).norm);
-    System.out.println(normSorted.get(3).num + " " + normSorted.get(3).norm);
-    System.out.println(normSorted.get(4).num + " " + normSorted.get(4).norm);
-    */
   }
   
-  private static void isHappy(int first, int second, ArrayList<structNum> normSorted)
+  private static void isHappy(int first, int second, ArrayList<structNum> normSorted) 
   {              
     if (first > second)
     {
@@ -48,8 +40,6 @@ public class HappyNum
       
     }
     
-    
-    int count = 0;
     
     for (int i = first; i <= second; i++)
     {
@@ -62,9 +52,7 @@ public class HappyNum
         normSorted.add(nSt);
         
       }           
-    }            
-    
-    //System.out.println(normSorted);        
+    }    
     
     if(normSorted.isEmpty())
       System.out.println("NOBODY'S HAPPY");
@@ -79,7 +67,7 @@ public class HappyNum
     }
   }
 
-  private static boolean checkHappy(long number, ArrayList<structNum> normSorted)
+  private static boolean checkHappy(long number, ArrayList<structNum> normSorted) //Comes from Rosetta Code
   {
     long m = 0;
     int digit = 0;
@@ -97,14 +85,10 @@ public class HappyNum
     
       }
       number = m;
-      //System.out.print(number + " ");
-      //System.out.print(norm + " ");
       norm += (number*number);
-      //System.out.print(norm + " ");
+
     }
-    //norm = Math.sqrt(norm);
     norm = Math.sqrt(norm);
-    //System.out.println(norm);
     
     return number == 1;
     

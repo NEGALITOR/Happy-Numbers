@@ -77,26 +77,28 @@ class HappyNums
   
   private static bool checkHappy(int n, List<structNum> normSorted, ref double rNorm)
   {
-      List<int> cache = new List<int>();
-      int sum = 0;
-      while (n != 1)
+    List<int> cycle = new List<int>();
+    int sum = 0;
+
+    while (n != 1)
+    {
+      if (cycle.Contains(n))
       {
-          if (cache.Contains(n))
-          {
-              return false;
-          }
-          cache.Add(n);
-          while (n != 0)
-          {
-              int digit = n % 10;
-              sum += digit * digit;
-              n /= 10;
-          }
-          n = sum;
-          rNorm += (n*n);
-          sum = 0;
+        return false;
       }
-    rNorm =  Math.Sqrt(rNorm);
+      cycle.Add(n);
+      
+      while (n != 0)
+      {
+        int digit = n % 10;
+        sum += digit * digit;
+        n /= 10;
+      }
+      n = sum;
+      rNorm += (n*n);
+      sum = 0;
+    }
+    rNorm = Math.Sqrt(rNorm);
     return true;            
   }
   

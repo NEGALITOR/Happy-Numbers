@@ -45,9 +45,6 @@ int main()
     numTwo = tmp;
   }
   
-  numPtr->num = numOne;
-  numPtr->norm = 0;
-  
   
   isHappy(numOne, numTwo, numPtr, head);
   
@@ -61,22 +58,25 @@ void isHappy(int numOne, int numTwo, struct numNode *numPtr, struct numNode *hea
   struct cycleNode *cyclePtr = (struct cycleNode*)malloc(sizeof(struct cycleNode));
   double rNorm = 0;
   
+  
   for (int i = numOne, j = 1; i <= numTwo; i++)
   {
     rNorm = i*i;
-    
     if (checkHappy(i, cyclePtr, &rNorm))
     {
-      struct numNode *ptr = (struct numNode*)malloc(sizeof(struct numNode));
-      
+           
       numPtr->num = i;
       numPtr->norm = rNorm;
-      numPtr->next = ptr;
-      ptr->back = numPtr;
+      numPtr->next = (struct numNode*)malloc(sizeof(struct numNode));
+      numPtr->next->back = numPtr;
+      
+      //printf("Number: %i\n", numPtr->num);
       
       numPtr = numPtr->next;
+      
     }
   }
+  
   
   if (numPtr->back != NULL)
   {
@@ -131,6 +131,7 @@ int checkHappy(int num, struct cycleNode *cyclePtr, double *rNorm)
   checkHappy(num, ptr, rNorm);
 }
 
+
 void sort(struct numNode **ptr, struct numNode *head)
 {
   int listLength = getCount(ptr, head);
@@ -181,7 +182,7 @@ int getCount(struct numNode **ptr, struct numNode *head)
 
 void printNodes(struct numNode *ptr)
 {
-  while (ptr != NULL && ptr->num != 0)
+  while (ptr != NULL)
   {
     ptr = ptr->next;
   }

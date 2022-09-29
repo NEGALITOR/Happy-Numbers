@@ -19,6 +19,7 @@ struct cycleNode
 
 void isHappy(int numOne, int numTwo, struct numNode *ptr, struct numNode *head);
 int checkHappy(int num, struct cycleNode *cyclePtr, double *rNorm);
+//void removeFromList(struct numNode **ptr, struct numNode *head);
 void sort(struct numNode **ptr, struct numNode *head);
 int getCount(struct numNode **ptr, struct numNode *head);
 void printNodes(struct numNode *ptr);
@@ -62,6 +63,7 @@ void isHappy(int numOne, int numTwo, struct numNode *numPtr, struct numNode *hea
   for (int i = numOne, j = 1; i <= numTwo; i++)
   {
     rNorm = i*i;
+    printf("Number: %i\n", i);
     if (checkHappy(i, cyclePtr, &rNorm))
     {
            
@@ -72,11 +74,15 @@ void isHappy(int numOne, int numTwo, struct numNode *numPtr, struct numNode *hea
       
       //printf("Number: %i\n", numPtr->num);
       
+      //removeFromList(numPtr, head);
+      
       numPtr = numPtr->next;
+      
+      
+      
       
     }
   }
-  
   
   if (numPtr->back != NULL)
   {
@@ -131,6 +137,38 @@ int checkHappy(int num, struct cycleNode *cyclePtr, double *rNorm)
   checkHappy(num, ptr, rNorm);
 }
 
+/*
+void removeFromList(struct numNode **ptr, struct numNode *head)
+{
+  int listLength = getCount(&ptr, head)-1;
+  printf("ListLength: %i ", listLength);  
+  printf("ptr: %i \n", ptr->next);
+  
+  
+  if (listLength > 10)
+  {
+    //printf("%i ", ptr->num);
+    
+    /*
+    struct numNode *minPtr = head;
+    
+    if (minPtr->next != NULL)
+      minPtr = minPtr->next; 
+    
+    for (int x = 0; x < listLength; x++)
+    {
+      if (ptr->norm > minPtr->norm)
+      {          
+        if (minPtr->back != NULL)
+          minPtr->back->next = minPtr->next;
+        if (minPtr->next != NULL)
+          minPtr->next->back = minPtr->back;
+      }
+        
+    }
+    
+  }
+}*/
 
 void sort(struct numNode **ptr, struct numNode *head)
 {

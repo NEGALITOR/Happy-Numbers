@@ -9,7 +9,6 @@ program HappyNums
 
   integer :: numOne
   integer :: numTwo
-  integer :: i, tmp
 
   write(*, '(A)', advance="no") "First Argument: "
   read(*,*) numOne
@@ -31,7 +30,6 @@ CONTAINS
     integer :: location
     integer :: i, j, tmp
     real :: rNorm
-    real :: meanNorm
 
     j = 1;
     location = 1;
@@ -73,7 +71,7 @@ CONTAINS
     CALL sort(normSorted, j)
 
     if (j == 1) then
-      write(*, '(A)') "NOBODYS HAPPY"
+      write(*, '(A)') "NOBODYS HAPPY!"
     else
       CALL printNums(normSorted, j)
     END IF
@@ -87,23 +85,23 @@ CONTAINS
     integer, intent (in) :: number
     real, intent (out) :: rNorm
     logical :: result
-    integer :: turtoise
+    integer :: turt
     integer :: hare
 
-    turtoise = number
+    turt = number
     hare = number
     do
-      turtoise = sumDigitsSquared(turtoise)
-      !write(*, '(A, i0, A, A, i0, A)', advance = 'no') "Number: ", number, ' | ', 'Turtoise: ', turtoise, ' | '
+      turt = sumDigitsSquared(turt)
+      !write(*, '(A, i0, A, A, i0, A)', advance = 'no') "Number: ", number, ' | ', 'Turt: ', turt, ' | '
       hare = sumDigitsSquared(sumDigitsSquared(hare))
       !write(*, '( A, A, i0, A)', advance = 'no') ' | ', 'Hare: ', hare, ' | '
       !write(*,*)" "
-      rNorm = rNorm + (turtoise*turtoise)
-      if (turtoise == hare) then
+      rNorm = rNorm + (turt*turt)
+      if (turt == hare) then
         exit
       end if
     end do
-    result = turtoise == 1
+    result = turt == 1
 
   end function checkHappy
 
@@ -114,18 +112,18 @@ CONTAINS
     integer :: result
     integer :: digit
     integer :: rest
-    integer :: work
+    integer :: num
 
     result = 0
-    work = number
+    num = number
     do
-      if (work == 0) then
+      if (num == 0) then
         exit
       end if
-      rest = work / 10
-      digit = work - 10 * rest
+      rest = num / 10
+      digit = num - 10 * rest
       result = result + digit * digit
-      work = rest
+      num = rest
     end do
 
   end function sumDigitsSquared
@@ -136,7 +134,6 @@ CONTAINS
   
     type(structNum), dimension(10), intent(out) :: normSorted
     type(structNum) :: maxim
-    type(structNum) :: key
     integer, intent(in) :: sortSize
     integer :: i, j, indx
 

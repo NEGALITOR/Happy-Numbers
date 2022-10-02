@@ -11,106 +11,139 @@ public class HappyNum
     double norm;
   }
   
-  public static double norm;
+  public static double rNorm;
   
   public static void main(String[] args)
   {
     Scanner stdin = new Scanner(System.in);
-    ArrayList<structNum> normSorted = new ArrayList<structNum>();
     
     System.out.print("First Argument: ");
-    int first = stdin.nextInt();
+    int numOne = stdin.nextInt();
     
     System.out.print("Second Argument: ");
-    int second = stdin.nextInt();
+    int numTwo = stdin.nextInt();
     stdin.close();
     
     
-    
-    isHappy(first, second, normSorted);
+    isHappy(numOne, numTwo);
   }
   
-  private static void isHappy(int first, int second, ArrayList<structNum> normSorted) 
-  {              
-    if (first > second)
+  private static void isHappy(int numOne, int numTwo) 
+  {         
+    structNum normSorted[] = new structNum[10];
+    int j = 0;
+         
+    if (numOne > numTwo)
     {
-      int tmp = first;
-      first = second;
-      second = tmp;
-      
+      int tmp = numOne;
+      numOne = numTwo;
+      numTwo = tmp;
     }
     
     
-    for (int i = first; i <= second; i++)
+    for (int i = numOne; i <= numTwo; i++)
     {
-      norm = i*i;
-      if(checkHappy(i, normSorted))
+      rNorm = i*i;
+      
+      if(checkHappy(i))
       {
         structNum nSt = new structNum();
         nSt.num = i;
-        nSt.norm = norm;
-        normSorted.add(nSt);
+        nSt.norm = rNorm;
         
+        if (j < 10)
+        {
+          normSorted[j] = nSt;
+          j++;
+        }
+        else
+        {
+          int location = searchMin(normSorted);
+          
+          if (j >= 10 && rNorm > normSorted[location].norm)
+          {
+            normSorted[location] = nSt;
+          }
+        }
       }           
     }    
     
-    if(normSorted.isEmpty())
-      System.out.println("NOBODY'S HAPPY");
+    sort(normSorted, j);
+    
+    if(j == 0)
+      System.out.println("NOBODYS HAPPY!");
     else
     {
-      sort(normSorted);
-      for(int k = 0; k < normSorted.size() && k < 10; k++)
+      for(int k = 0; k < j; k++)
       {
-        System.out.println(normSorted.get(k).num);
+        System.out.println(normSorted[k].num);
+        System.out.println(" | " + normSorted[k].norm);
+      }
+    }
+    
+  }
+
+  private static boolean checkHappy(int num)
+  {
+    int sum = 0, digit;
+    
+    while (num != 1)
+    {
+      if (num == 4)
+        return false;
+      
+      while (num != 0)
+      {
+        digit = num % 10;
+        sum += (digit*digit);
+        num /= 10;
         
       }
-    }
-  }
-
-  private static boolean checkHappy(long number, ArrayList<structNum> normSorted) //Comes from Rosetta Code
-  {
-    long m = 0;
-    int digit = 0;
-    HashSet<Long> cycle = new HashSet<Long>();
-    
-    while (number != 1 && cycle.add(number))
-    {
-      m = 0;
       
-      while (number > 0)
-      {
-        digit = (int)(number % 10);
-        m += digit * digit;
-        number /= 10;
-    
-      }
-      number = m;
-      norm += (number*number);
-
+      num = sum;
+      rNorm += (num*num);
+      sum = 0;
     }
-    norm = Math.sqrt(norm);
-    
-    return number == 1;
+    rNorm = Math.sqrt(rNorm);
+    return true;
     
   }
   
-  
-  
-  private static void sort(ArrayList<structNum> normSorted)
+  private static int searchMin(structNum normSorted[])
   {
-    for (int i = 0; i < normSorted.size(); i++)
+    structNum minSt = normSorted[0];
+    double minNorm; 
+    int location = 0;
+    
+    for (int i = 0; i < normSorted.length; i++)
+    {
+      minNorm = Math.min(minSt.norm, normSorted[i].norm);
+      
+      if (minNorm == normSorted[i].norm)
+      {
+        minSt = normSorted[i];
+        location = i;
+      }
+    }
+    return location;
+    
+  }
+  
+  private static void sort(structNum normSorted[], int arrSize)
+  {
+    for (int i = 0; i < arrSize; i++)
     {
       int index = i;
       
-      for (int j = i; j < normSorted.size(); j++)
+      for (int j = i; j < arrSize; j++)
       {
-        if (normSorted.get(j).norm > normSorted.get(index).norm)
+        if (normSorted[j].norm > normSorted[index].norm)
           index = j;
           
       }
-      structNum max = normSorted.get(index);
-      normSorted.set(index, normSorted.get(i));
-      normSorted.set(i, max);
+      structNum maxim = normSorted[index];
+      normSorted[index] = normSorted[i];
+      normSorted[i] = maxim;
       
     }
   

@@ -12,62 +12,67 @@ class HappyNums
   }
   
   static void Main(string[] args)
-  {
-    List<structNum> normSorted = new List<structNum>();
-    double rNorm = 0;
-    
+  {    
     Console.Write("First Argument: ");
-    int first = Convert.ToInt32(Console.ReadLine());
+    int numOne = Convert.ToInt32(Console.ReadLine());
     
     Console.Write("Second Argument: ");
-    int second = Convert.ToInt32(Console.ReadLine());
+    int numTwo = Convert.ToInt32(Console.ReadLine());
     
-    isHappy(first, second, normSorted, ref rNorm);
+    isHappy(numOne, numTwo);
     
     
-    /*
-    int num = 1;
-      List<int> happynums = new List<int>();
-  
-      while (happynums.Count < 8)
-      {
-          if (ishappy(num))
-          {
-              happynums.Add(num);
-          }
-          num++;
-      }
-      Console.WriteLine("First 8 happy numbers : " + string.Join(",", happynums));
-      */
+    
   }
   
-  private static void isHappy(int first, int second, List<structNum> normSorted, ref double rNorm)
+  private static void isHappy(int numOne, int numTwo)
   {
-    if (first > second)
+  
+    structNum[] normSorted = new structNum[10];
+    double rNorm = 0;
+    int j = 0;
+  
+    if (numOne > numTwo)
     {
-      int tmp = first;
-      first = second;
-      second = tmp;
+      int tmp = numOne;
+      numOne = numTwo;
+      numTwo = tmp;
     }
     
-    for (int i = first; i <= second; i++)
+    for (int i = numOne; i <= numTwo; i++)
     {
       rNorm = i*i;
-      if (checkHappy(i, normSorted, ref rNorm))
+      
+      if (checkHappy(i, ref rNorm))
       {
         structNum nSt = new structNum();
         nSt.num = i;
         nSt.norm = rNorm;
-        normSorted.Add(nSt);
+        
+        if (j < 10)
+        {
+          normSorted[j] = nSt;
+          j++;
+        }
+        else
+        {
+          int location = searchMin(normSorted);
+          
+          if (j >= 10 && rNorm > normSorted[location].norm)
+          {
+            normSorted[location] = nSt;
+          }
+        }
       }
     }
     
-    if (normSorted.Count == 0)
-      Console.WriteLine("NOBODY'S HAPPY");
+    sort(normSorted, j);
+    
+    if (j == 0)
+      Console.WriteLine("NOBODYS HAPPY!");
     else
     {
-      sort(normSorted);
-      for(int k = 0; k < normSorted.Count() && k < 10; k++)
+      for(int k = 0; k < j; k++)
       {
         Console.WriteLine(normSorted[k].num);
       }
@@ -75,40 +80,58 @@ class HappyNums
     
   }
   
-  private static bool checkHappy(int n, List<structNum> normSorted, ref double rNorm)
+  private static bool checkHappy(int num, ref double rNorm)
   {
-    List<int> cycle = new List<int>();
-    int sum = 0;
-
-    while (n != 1)
+    int sum = 0, digit;
+    
+    while (num != 1)
     {
-      if (cycle.Contains(n))
-      {
+      if (num == 4)
         return false;
-      }
-      cycle.Add(n);
-      
-      while (n != 0)
+        
+      while (num != 0)
       {
-        int digit = n % 10;
-        sum += digit * digit;
-        n /= 10;
+        digit = num % 10;
+        sum += (digit*digit);
+        num /= 10;
       }
-      n = sum;
-      rNorm += (n*n);
+      
+      num = sum;
+      rNorm += (num*num);
       sum = 0;
     }
     rNorm = Math.Sqrt(rNorm);
-    return true;            
+    return true;
   }
   
-  private static void sort(List<structNum> normSorted)
+  private static int searchMin(structNum[] normSorted)
   {
-    for (int i = 0; i < normSorted.Count(); i++)
+    structNum minSt = normSorted[0];
+    double minNorm;
+    int location = 0;
+    
+    for (int i = 0; i < normSorted.Length; i++)
+    {
+      minNorm = Math.Min(minSt.norm, normSorted[i].norm);
+      
+      if (minNorm == normSorted[i].norm)
+      {
+        minSt = normSorted[i];
+        location = i;
+      }
+      
+    }
+    return location;
+    
+  }
+  
+  private static void sort(structNum[] normSorted, int arrSize)
+  {
+    for (int i = 0; i < arrSize; i++)
     {
       int index = i;
       
-      for (int j = i; j < normSorted.Count(); j++)
+      for (int j = i; j < arrSize; j++)
       {
         if (normSorted[j].norm > normSorted[index].norm)
           index = j;

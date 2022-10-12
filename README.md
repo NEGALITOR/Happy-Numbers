@@ -4,31 +4,31 @@ This is the Happy Number Project for CSC 330. It will be programmed in Java, C, 
 
 ## How to Compile and Run
 ###### Java
-> javac HappyNums.java
+> javac HappyNums.java  
 > java HappyNums
 
 ###### C#
-> mcs HappyNums.cs
+> mcs HappyNums.cs  
 > mono HappyNums.exe
 
 ###### Python
 > python3 HappyNums.py
 
 ###### C
-> gcc HappyNums.c
+> gcc HappyNums.c  
 > ./a.out
 
 ###### Go
 > go run HappyNums.go
 
 ###### Perl
-> chmod u+x HappyNums.pl
+> chmod u+x HappyNums.pl  
 > ./HappyNums.pl
 
 ###### Fortran
-> gfortran HappyNums.f95
+> gfortran HappyNums.f95  
 > ./a.out
 
 ###### Lisp
-> chmod u+x HappyNums.lisp
+> chmod u+x HappyNums.lisp  
 > ./HappyNums.lisp

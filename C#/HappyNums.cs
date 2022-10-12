@@ -1,3 +1,9 @@
+/*
+  * Compiling
+  * mcs HappyNums.cs
+  * mono HappyNums.exe
+*/
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +31,14 @@ class HappyNums
     
   }
   
+/*
+  * Initializes the normSorted array of size 10
+  * Switches numOne and numTwo if numOne is bigger than numTwoi
+  * Runs a for-loop where it iterates from numOne to numTwo to determine if a value is a Happy Number or not
+  * Creates a structNum given the norm and happy number when it returns true from checkHappy
+  * Fills array with happy numbers till size 10. If size exceeds 10, find lowest norm in array and replace it with searchMin
+  * Sorts and Prints at the end
+*/
   private static void isHappy(int numOne, int numTwo)
   {
   
@@ -80,6 +94,13 @@ class HappyNums
     
   }
   
+/*
+  * Checks whether a value passed through is Happy or Unhappy
+  * Checks if a value is 1 or 4 every passthrough to determine if happy or unhappy
+  * Goes through each digit and adds it to the sum after being squared and reassigns it back to num
+  * Calculates norm of value after determining if happy or not
+  * Returns true if num == 1 and false if num == 4
+*/
   private static bool checkHappy(int num, ref double rNorm)
   {
     int sum = 0, digit;
@@ -104,6 +125,7 @@ class HappyNums
     return true;
   }
   
+  //Searches through array for the lowest norm and returns the location of the array
   private static int searchMin(structNum[] normSorted)
   {
     structNum minSt = normSorted[0];
@@ -125,6 +147,7 @@ class HappyNums
     
   }
   
+  //Insertion sort through norms from greatest to least
   private static void sort(structNum[] normSorted, int arrSize)
   {
     for (int i = 0; i < arrSize; i++)

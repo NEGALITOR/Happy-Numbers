@@ -1,3 +1,9 @@
+/*
+* Compiling
+* c++ HappyNums.c -o HappyNums.out -lm
+* ./HappyNums.out
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -19,10 +25,8 @@ struct cycleNode
 
 void isHappy(int numOne, int numTwo, struct numNode *ptr, struct numNode *head);
 int checkHappy(int num, struct cycleNode *cyclePtr, double *rNorm);
-//void removeFromList(struct numNode **ptr, struct numNode *head);
 void sort(struct numNode **ptr, struct numNode *head);
 int getCount(struct numNode **ptr, struct numNode *head);
-void printNodes(struct numNode *ptr);
 void printSorted(struct numNode sorted[], struct numNode *ptr, struct numNode *head);
 
 int main()
@@ -54,6 +58,13 @@ int main()
   
 }
 
+/*
+ * Allocates an array of structNum and iterates through between numOne and numTwo in a loop
+ * Once a num is determined a happy number, a new structNum node is filled with the value and norm
+ * Node establishes necessary connections with other nodes
+ *
+*/
+
 void isHappy(int numOne, int numTwo, struct numNode *numPtr, struct numNode *head)
 {
   struct cycleNode *cyclePtr = (struct cycleNode*)malloc(sizeof(struct cycleNode));
@@ -63,7 +74,7 @@ void isHappy(int numOne, int numTwo, struct numNode *numPtr, struct numNode *hea
   for (int i = numOne, j = 1; i <= numTwo; i++)
   {
     rNorm = i*i;
-    printf("Number: %i\n", i);
+    
     if (checkHappy(i, cyclePtr, &rNorm))
     {
            
@@ -72,14 +83,7 @@ void isHappy(int numOne, int numTwo, struct numNode *numPtr, struct numNode *hea
       numPtr->next = (struct numNode*)malloc(sizeof(struct numNode));
       numPtr->next->back = numPtr;
       
-      //printf("Number: %i\n", numPtr->num);
-      
-      //removeFromList(numPtr, head);
-      
-      numPtr = numPtr->next;
-      
-      
-      
+      numPtr = numPtr->next;     
       
     }
   }
@@ -106,10 +110,13 @@ void isHappy(int numOne, int numTwo, struct numNode *numPtr, struct numNode *hea
   }
 }
 
+//Checks whether a value is happy by checking a cycle of linkedlist
 int checkHappy(int num, struct cycleNode *cyclePtr, double *rNorm)
 {  
   if (num == 4)
+  {
     return 0;
+  }
   
   if (num == 1)
   {
@@ -133,43 +140,11 @@ int checkHappy(int num, struct cycleNode *cyclePtr, double *rNorm)
   }
   num = sum;
   *rNorm += (num*num);
-        
+  
   checkHappy(num, ptr, rNorm);
 }
 
-/*
-void removeFromList(struct numNode **ptr, struct numNode *head)
-{
-  int listLength = getCount(&ptr, head)-1;
-  printf("ListLength: %i ", listLength);  
-  printf("ptr: %i \n", ptr->next);
-  
-  
-  if (listLength > 10)
-  {
-    //printf("%i ", ptr->num);
-    
-    /*
-    struct numNode *minPtr = head;
-    
-    if (minPtr->next != NULL)
-      minPtr = minPtr->next; 
-    
-    for (int x = 0; x < listLength; x++)
-    {
-      if (ptr->norm > minPtr->norm)
-      {          
-        if (minPtr->back != NULL)
-          minPtr->back->next = minPtr->next;
-        if (minPtr->next != NULL)
-          minPtr->next->back = minPtr->back;
-      }
-        
-    }
-    
-  }
-}*/
-
+//Sorts from greatest to least using insertion sort
 void sort(struct numNode **ptr, struct numNode *head)
 {
   int listLength = getCount(ptr, head);
@@ -205,6 +180,7 @@ void sort(struct numNode **ptr, struct numNode *head)
   
 }
 
+//Gets the number of items in linked list
 int getCount(struct numNode **ptr, struct numNode *head)
 {
     int count = 0;
@@ -218,14 +194,7 @@ int getCount(struct numNode **ptr, struct numNode *head)
     return count;
 }
 
-void printNodes(struct numNode *ptr)
-{
-  while (ptr != NULL)
-  {
-    ptr = ptr->next;
-  }
-}
-
+//Prints all nodes in linked list
 void printSorted(struct numNode sorted[], struct numNode *ptr, struct numNode *head)
 {
   int listLength = getCount(&ptr, head);

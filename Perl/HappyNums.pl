@@ -1,5 +1,11 @@
 #!/usr/bin/perl
 
+#----------------------------------------------------------------------------------------------------------------------------------
+# Compiling
+# chmod u+x HappyNums.pl
+# ./HappyNums.pl
+#----------------------------------------------------------------------------------------------------------------------------------
+
 use strict;
 use warnings;
 use Class::Struct;
@@ -22,6 +28,14 @@ sub main
   
 }
 
+#----------------------------------------------------------------------------------------------------------------------------------
+# Initializes the normSorted array of size 10
+# Switches numOne and numTwo if numOne is bigger than numTwoi
+# Runs a for-loop where it iterates from numOne to numTwo to determine if a value is a Happy Number or not
+# Creates a structNum given the norm and happy number when it returns true from checkHappy
+# Fills array with happy numbers till size 10. If size exceeds 10, find lowest norm in array and replace it with searchMin
+# Sorts and Prints at the end
+#----------------------------------------------------------------------------------------------------------------------------------
 sub isHappy()
 {
   my @normSorted = ();
@@ -40,15 +54,11 @@ sub isHappy()
   for (my $i = $numOne; $i <= $numTwo; $i++)
   {
     $rNorm = $i*$i;
-    #print($i."\n");
     if(checkHappy($i, $rNorm))
     {
-      #print($i." ".$rNorm."\n");
       my $nSt = structNum->new();
       $nSt->num($i);
       $nSt->norm($rNorm);
-      
-      #print(scalar @normSorted);
       
 
       if ($j < 10)
@@ -67,17 +77,10 @@ sub isHappy()
         
       }
       
-      #print(scalar @normSorted);
-      
     }
   }  
   
-
-  #printNums(scalar @normSorted, @normSorted);
   @normSorted = sortNorm(@normSorted);
-  
-  #print($normSorted[0]->num."\n");
-  #printNums(@normSorted);
   
   if (scalar @normSorted == 0)
   {
@@ -89,13 +92,17 @@ sub isHappy()
   }
 }
 
+#----------------------------------------------------------------------------------------------------------------------------------
+# Checks whether a value passed through is Happy or Unhappy
+# Checks if a value is 1 or 4 every passthrough to determine if happy or unhappy
+# Goes through each digit and adds it to the sum after being squared and reassigns it back to num
+# Calculates norm of value after determining if happy or not
+# Returns true if num == 1 and false if num == 4
+#----------------------------------------------------------------------------------------------------------------------------------
 sub checkHappy()
 {
   my $num = $_[0];
-  #my $rNorm = $_[1];
   my $digit, my $sum;
-  
-  #print($num." ".$rNorm."\n");
   
   while ($num != 1)
   {
@@ -115,13 +122,14 @@ sub checkHappy()
     $num = $sum;
     $_[1] += ($num*$num);
     $sum = 0;
-    #print($num." ".$rNorm."\n");
   }
   $_[1] = sqrt($_[1]);
-  #print($rNorm."\n");
   return 1;
 }
 
+#----------------------------------------------------------------------------------------------------------------------------------
+# Searches through array for the lowest norm and returns the location of the array
+#----------------------------------------------------------------------------------------------------------------------------------
 sub searchMin()
 {
   my @normSorted = @_;
@@ -144,12 +152,14 @@ sub searchMin()
   return $location;
 }
 
+
+#----------------------------------------------------------------------------------------------------------------------------------
+# Insertion sort through norms from greatest to least
+#----------------------------------------------------------------------------------------------------------------------------------
 sub sortNorm()
 {
   my @normSorted = @_;
   my $maxim;
-  
-
   
   for (my $i = 0; $i < scalar @normSorted; $i++)
   {
@@ -157,7 +167,6 @@ sub sortNorm()
     
     for (my $j = $i; $j < scalar @normSorted; $j++)
     {
-      #printf("i: %d | j: %d | sortSize: %d\n", $i, $j, scalar @normSorted);
       if ($normSorted[$j]->norm > $normSorted[$index]->norm)
       {
         $index = $j;
@@ -171,11 +180,12 @@ sub sortNorm()
   return @normSorted;
 }
 
+#----------------------------------------------------------------------------------------------------------------------------------
+# Prints all nums in array
+#----------------------------------------------------------------------------------------------------------------------------------
 sub printNums()
 {
   my @normSorted = @_;
-  
-  #print($normSorted[0]->num);
 
   for (my $i = 0; $i < scalar @normSorted; $i++)
   {

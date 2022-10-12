@@ -1,3 +1,9 @@
+/*
+* Compiling
+* javac HappyNum.java
+* java HappyNum
+*/
+
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -5,6 +11,7 @@ import java.lang.Math;
 
 public class HappyNum
 {
+  //Struct containing the num and norm
   private static class structNum
   {
     int num;
@@ -17,6 +24,7 @@ public class HappyNum
   {
     Scanner stdin = new Scanner(System.in);
     
+    //Takes input from the the user
     System.out.print("First Argument: ");
     int numOne = stdin.nextInt();
     
@@ -28,6 +36,15 @@ public class HappyNum
     isHappy(numOne, numTwo);
   }
   
+  
+  /*
+  * Initializes the normSorted array of size 10
+  * Switches numOne and numTwo if numOne is bigger than numTwoi
+  * Runs a for-loop where it iterates from numOne to numTwo to determine if a value is a Happy Number or not
+  * Creates a structNum given the norm and happy number when it returns true from checkHappy
+  * Fills array with happy numbers till size 10. If size exceeds 10, find lowest norm in array and replace it with searchMin
+  * Sorts and Prints at the end
+  */
   private static void isHappy(int numOne, int numTwo) 
   {         
     structNum normSorted[] = new structNum[10];
@@ -77,12 +94,19 @@ public class HappyNum
       for(int k = 0; k < j; k++)
       {
         System.out.println(normSorted[k].num);
-        System.out.println(" | " + normSorted[k].norm);
+        //System.out.println(" | " + normSorted[k].norm);
       }
     }
     
   }
-
+  
+  /*
+  * Checks whether a value passed through is Happy or Unhappy
+  * Checks if a value is 1 or 4 every passthrough to determine if happy or unhappy
+  * Goes through each digit and adds it to the sum after being squared and reassigns it back to num
+  * Calculates norm of value after determining if happy or not
+  * Returns true if num == 1 and false if num == 4
+  */
   private static boolean checkHappy(int num)
   {
     int sum = 0, digit;
@@ -109,6 +133,7 @@ public class HappyNum
     
   }
   
+  //Searches through array for the lowest norm and returns the location of the array
   private static int searchMin(structNum normSorted[])
   {
     structNum minSt = normSorted[0];
@@ -129,6 +154,7 @@ public class HappyNum
     
   }
   
+  //Insertion sort through norms
   private static void sort(structNum normSorted[], int arrSize)
   {
     for (int i = 0; i < arrSize; i++)

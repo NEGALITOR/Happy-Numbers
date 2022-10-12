@@ -1,3 +1,8 @@
+/*
+  * Compiling
+  * go run HappyNums.go
+*/
+
 package main
 
 import (
@@ -21,6 +26,15 @@ func main() {
   isHappy(numOne, numTwo);
 }
 
+
+/*
+  * Initializes the normSorted array of size 10
+  * Switches numOne and numTwo if numOne is bigger than numTwoi
+  * Runs a for-loop where it iterates from numOne to numTwo to determine if a value is a Happy Number or not
+  * Creates a structNum given the norm and happy number when it returns true from checkHappy
+  * Fills array with happy numbers till size 10. If size exceeds 10, find lowest norm in array and replace it with searchMin
+  * Sorts and Prints at the end
+*/
 func isHappy(numOne int, numTwo int) {
 
   var normSorted[10] structNum
@@ -66,6 +80,14 @@ func isHappy(numOne int, numTwo int) {
   
 }
 
+
+/*
+  * Checks whether a value passed through is Happy or Unhappy
+  * Checks if a value is 1 or 4 every passthrough to determine if happy or unhappy
+  * Goes through each digit and adds it to the sum after being squared and reassigns it back to num
+  * Calculates norm of value after determining if happy or not
+  * Returns true if num == 1 and false if num == 4
+*/
 func checkHappy(num int, rNorm *float64) bool {
   var digit int
   var sum int
@@ -91,6 +113,7 @@ func checkHappy(num int, rNorm *float64) bool {
   
 }
 
+//Searches through array for the lowest norm and returns the location of the array
 func searchMin(normSorted[10] structNum) int {
 
   var minSt structNum = normSorted[0]
@@ -108,6 +131,7 @@ func searchMin(normSorted[10] structNum) int {
   return location
 }
 
+//Insertion sort through norms from greatest to least
 func sort(normSorted[10] structNum) [10]structNum {
   var maxim structNum
   
@@ -126,6 +150,7 @@ func sort(normSorted[10] structNum) [10]structNum {
   return normSorted
 }
 
+//Prints Nums
 func printNums(normSorted[10] structNum) {
   for i := 0; i < len(normSorted); i++ {
     if normSorted[i].num != 0 {

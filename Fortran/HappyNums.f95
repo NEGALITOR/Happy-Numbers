@@ -1,3 +1,9 @@
+!----------------------------------------------------------------------------------------------------------------------------------
+! Compiling
+! gfortran HappyNums.f95
+! ./a.out
+!----------------------------------------------------------------------------------------------------------------------------------
+
 program HappyNums
 
   IMPLICIT NONE
@@ -19,6 +25,14 @@ program HappyNums
 
 CONTAINS
 
+  !----------------------------------------------------------------------------------------------------------------------------------
+  ! Initializes the normSorted array of size 10
+  ! Switches numOne and numTwo if numOne is bigger than numTwoi
+  ! Runs a for-loop where it iterates from numOne to numTwo to determine if a value is a Happy Number or not
+  ! Creates a structNum given the norm and happy number when it returns true from checkHappy
+  ! Fills array with happy numbers till size 10. If size exceeds 10, find lowest norm in array and replace it with searchMin
+  ! Sorts and Prints at the end
+  !----------------------------------------------------------------------------------------------------------------------------------
   SUBROUTINE isHappy(numOne, numTwo)
 
     IMPLICIT NONE
@@ -44,25 +58,13 @@ CONTAINS
       rNorm = i*i
       
       if (checkHappy(i, rNorm)) then
-        !write(*,'(i0)') i
         nSt = structNum(i, rNorm)
-        !write(*, '(i0, A, f20.5)') nSt%num , " | ", nSt%norm
-
         location = searchMin(normSorted, j) !change this to make it so it compares each other with nSt not whole array
 
         if (j >= 11 .AND. rNorm > normSorted(location)%norm) then
-          !write(*, '(A)') "Done"
           normSorted(location) = nSt
-          !write(*,'(A)')" "
-          !write(*, '(i0, A, f0.5, A)') normSorted(location)%num, " | ", normSorted(location)%norm, " | "
-          
-          !j = 10
         else if (j < 11) then
-          !write(*, '(i0)') j
-          !write(*, '(i0, A)', advance = 'no') nSt%num, " | "
-          !write(*,"(f20.5)") nSt%norm
           normSorted(j) = nSt
-          !write(*, '(i0, A, f0.5)') normSorted(j)%num, " | ", normSorted(j)%norm
           j = j + 1
         END if
       END if
@@ -77,7 +79,12 @@ CONTAINS
     END IF
 
   END SUBROUTINE
-
+  
+  !----------------------------------------------------------------------------------------------------------------------------------
+  ! Checks whether a value passed through is Happy or Unhappy
+  ! Calculates norm of value after determining if happy or not
+  ! Returns true if hare and turt are equal do determine happiness
+  !----------------------------------------------------------------------------------------------------------------------------------
   FUNCTION checkHappy(number, rNorm) result(result) !From Rosetta code with rNorm integrated
 
     implicit none
@@ -92,10 +99,8 @@ CONTAINS
     hare = number
     do
       turt = sumDigitsSquared(turt)
-      !write(*, '(A, i0, A, A, i0, A)', advance = 'no') "Number: ", number, ' | ', 'Turt: ', turt, ' | '
       hare = sumDigitsSquared(sumDigitsSquared(hare))
-      !write(*, '( A, A, i0, A)', advance = 'no') ' | ', 'Hare: ', hare, ' | '
-      !write(*,*)" "
+
       rNorm = rNorm + (turt*turt)
       if (turt == hare) then
         exit
@@ -104,7 +109,11 @@ CONTAINS
     result = turt == 1
 
   end function checkHappy
-
+  
+  !----------------------------------------------------------------------------------------------------------------------------------
+  ! Plays in hand with checkHappy to determine the next and previous value to see if the value reaches 0
+  ! Goes through each digit and adds it to rest after being squared and reassigns it back to num
+  !----------------------------------------------------------------------------------------------------------------------------------
   FUNCTION sumDigitsSquared(number) result(result) !From Rosetta code
   
     implicit none
@@ -127,7 +136,10 @@ CONTAINS
     end do
 
   end function sumDigitsSquared
-
+  
+  !----------------------------------------------------------------------------------------------------------------------------------
+  ! Insertion sort through norms from greatest to least
+  !----------------------------------------------------------------------------------------------------------------------------------
   SUBROUTINE sort(normSorted, sortSize)
   
     IMPLICIT NONE
@@ -152,6 +164,9 @@ CONTAINS
 
   END SUBROUTINE
 
+  !----------------------------------------------------------------------------------------------------------------------------------
+  ! Searches through array for the lowest norm and returns the location of the array
+  !----------------------------------------------------------------------------------------------------------------------------------
   integer FUNCTION searchMin(normSorted, arrSize)
 
     IMPLICIT NONE
@@ -169,21 +184,19 @@ CONTAINS
     !write(*,"(i0)") arrSize-1
     do i = 1, arrSize-1
       minNorm = min(minSt%norm, normSorted(i)%norm)
-      !write(*, '(i0, A, i0)') minSt%num, " | ", normSorted(i)%num
-      !write(*,'(f0.5, A, f0.5, A, f0.5)') minNorm, " | ", minSt%norm, " | ", normSorted(i)%norm
       
-      !write(*,"(i0)") minSt%num
       if (minNorm == normSorted(i)%norm) then
-        !write(*,"(A)") "Done"
         minSt = normSorted(i)
         location = i
       END if
     END do
-    !write(*,"(A)") ""
     searchMin = location
 
   END FUNCTION
-
+  
+  !----------------------------------------------------------------------------------------------------------------------------------
+  ! Prints all nums in array
+  !----------------------------------------------------------------------------------------------------------------------------------
   SUBROUTINE printNums(normSorted, arrSize)
 
     IMPLICIT NONE

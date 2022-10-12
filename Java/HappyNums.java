@@ -9,7 +9,7 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.lang.Math;
 
-public class HappyNum
+public class HappyNums
 {
   //Struct containing the num and norm
   private static class structNum

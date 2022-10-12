@@ -3,32 +3,32 @@
 This is the Happy Number Project for CSC 330. It will be programmed in Java, C, C#, Go, Python, Perl, Fortran, Lisp
 
 ## How to Compile
-###Java
+######Java
 javac HappyNums.java
 java HappyNums
 
-###C
-gcc HappyNums.c
-./a.out
-
-###Python
-python3 HappyNums.py
-
-###C#
+######C#
 mcs HappyNums.cs
 mono HappyNums.exe
 
-###Fortran
-gfortran HappyNums.f95
+######Python
+python3 HappyNums.py
+
+######C
+gcc HappyNums.c
 ./a.out
 
-###Perl
+######Go
+go run HappyNums.go
+
+######Perl
 chmod u+x HappyNums.pl
 ./HappyNums.pl
 
-###Go
-go run HappyNums.go
+######Fortran
+gfortran HappyNums.f95
+./a.out
 
-###Lisp
+######Lisp
 chmod u+x HappyNums.lisp
 ./HappyNums.lisp
